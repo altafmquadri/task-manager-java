@@ -65,7 +65,6 @@ public class TasksController {
 		task.setDescription(description);
 		task.setPriority(priority);
 		Date stDate = format.parse(startDate);
-		System.out.println(startDate);
 		task.setStartDate(stDate);
 		Date eDate = format.parse(endDate);
 		task.setEndDate(eDate);
@@ -79,7 +78,6 @@ public class TasksController {
 	@GetMapping("{name}/{id}/edittask/{tid}")
 	public ModelAndView showEditTask(@PathVariable("name") String name, @PathVariable("id") int id,  @PathVariable("tid") int tId) {
 		Task task = userDao.findById(id).get().getTasks().stream().filter(t -> t.getId() == tId).findFirst().orElse(null);
-		System.out.println(task);
 		
 		return new ModelAndView("/edittask").addObject(task);
 	}

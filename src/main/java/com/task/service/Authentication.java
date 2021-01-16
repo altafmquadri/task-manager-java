@@ -1,6 +1,7 @@
 package com.task.service;
 
-import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,30 +9,30 @@ import com.task.dao.UserDAO;
 import com.task.model.User;
 
 import lombok.Data;
+import lombok.val;
 
 @Data
 @Service
-public class Authentication implements AuthenticationInterface{
+public class Authentication implements AuthenticationInterface {
 
-	private User currentUser=null;
-	
+	private User currentUser = null;
+
 	@Autowired
 	UserDAO userDao;
-	
+
 	@Override
 	public boolean authenticate(String userName, String password) {
-		List<User> users = (List<User>) userDao.findAll();
-		User u = (User) users.stream().filter(user -> user.getName().equals(userName.toLowerCase())).findFirst().orElse(null);
-		if ( u != null && userName.equalsIgnoreCase(u.getName()) &&  u.getPassword().equals(password)) {
+		val validUser = new AtomicBoolean(false);
+		userDao.findOneByNameAndPassword(userName, password).ifPresent(u -> {
 			setCurrentUser(u);
-			return true;
-		}
-		return false;
+			validUser.set(true);
+		});
+		return validUser.get();
 	}
 
 	@Override
 	public void logout() {
 		setCurrentUser(null);
-		
+
 	}
 }

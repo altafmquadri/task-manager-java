@@ -1,3 +1,6 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="com.task.model.Task"%>
 <%@page import="com.task.model.User"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -11,8 +14,12 @@
 	<%
 	User user = (User) session.getAttribute("user");
 	if (user == null) {
-		response.sendRedirect("/login");
+		response.sendRedirect("/login");		
 	}
+		Task t = (Task) request.getAttribute("task");
+		DateFormat format = new SimpleDateFormat("YYYY-MM-DD");
+		String sDate = format.format(t.getStartDate());
+		String eDate = format.format(t.getEndDate());
 	%>
 	<div>
 		<div>
@@ -37,9 +44,9 @@
 					<option value="low">Low</option>
 				</select>
 				<label>Start Date:</label>
-				<input type="date" name="startdate"  value="${task.getStartDate()}">
+				<input type="date" name="startdate"value="<%=sDate%>">
 				<label>End Date:</label>
-				<input type="date" name="enddate"  value="${task.getEndDate()}">
+				<input type="date" name="enddate" value="<%=eDate%>">
 				<input type="submit" value="Save Task">
 			</form>
 		</div>

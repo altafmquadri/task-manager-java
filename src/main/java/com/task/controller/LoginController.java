@@ -1,6 +1,5 @@
 package com.task.controller;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.task.dao.UserDAO;
 import com.task.model.User;
 import com.task.service.Authentication;
+
+import lombok.val;
 
 @RestController
 @SessionAttributes("user")
@@ -38,11 +39,11 @@ public class LoginController {
 	public ModelAndView register(@RequestParam("name") String name, @RequestParam("password") String password,
 			@RequestParam("confirmation") String confirmation) {
 
-		AtomicBoolean isUnique = new AtomicBoolean(true);
+		val isUnique = new AtomicBoolean(true);
 		String message = null;
-		List<User> users = (List<User>) userDao.findAll();
 		
-		users.stream().filter(u -> u.getName().equalsIgnoreCase(name)).findFirst().ifPresent(u -> isUnique.set(false));
+		userDao.findOneByNameAndPassword(name.toLowerCase(), password).ifPresent(u -> isUnique.set(false));
+	
 		if (!password.equals(confirmation)) {
 			message = "Password and Confirmation does not match";
 		} else if (!isUnique.get()) {
