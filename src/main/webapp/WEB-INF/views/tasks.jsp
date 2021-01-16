@@ -57,7 +57,7 @@
 					<td><%=t.getStartDate().toString().substring(0,10)%></td>
 					<td><%=t.getEndDate().toString().substring(0,10) %></td>
 					<td><button> <a href="/${user.getName()}/${user.getId()}/edittask/<%= t.getId()%>">Edit</a></button></td>
-					<td><button>Delete</button></td>
+					<td><button><a href="/${user.getName()}/${user.getId()}/deletetask/<%= t.getId()%>">Delete</a></button></td>
 				</tr>
 				<%
 				}

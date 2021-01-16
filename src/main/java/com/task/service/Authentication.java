@@ -33,6 +33,5 @@ public class Authentication implements AuthenticationInterface {
 	@Override
 	public void logout() {
 		setCurrentUser(null);
-
 	}
 }

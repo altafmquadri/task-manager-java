@@ -34,20 +34,21 @@
 			<h3>Please Make Changes and Save Task</h3>
 		</div>
 		<div>
-			<form method="post" action="/${user.getName()}/${user.getId()}/task">
+			<form method="post" action="/${user.getName()}/${user.getId()}/edittask/${task.getId()}">
 				<label>Task Name</label> <input type="text" name="tname" value="${task.getName()}" required="required" > 
 				<label>Description</label> <input type="text" name="description" value="${task.getDescription()}" required="required"> 
 				<label>Priority</label>
 				<select name="priority">
-					<option value="high">High</option>
-					<option value="medium">Medium</option>
 					<option value="low">Low</option>
+					<option value="medium">Medium</option>
+					<option value="high">High</option>
 				</select>
 				<label>Start Date:</label>
 				<input type="date" name="startdate"value="<%=sDate%>">
 				<label>End Date:</label>
 				<input type="date" name="enddate" value="<%=eDate%>">
 				<input type="submit" value="Save Task">
+				<button>Cancel</button>
 			</form>
 		</div>
 	</div>
