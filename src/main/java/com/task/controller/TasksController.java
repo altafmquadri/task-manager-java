@@ -58,7 +58,7 @@ public class TasksController {
 			@RequestParam("priority") String priority, @RequestParam("startdate") String startDate,
 			@RequestParam("enddate") String endDate, HttpServletRequest request) throws ParseException {
 
-		DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
 		User user = userDao.findById(id).get();
 		Task task = new Task();
@@ -89,12 +89,13 @@ public class TasksController {
 			@RequestParam("description") String description, @RequestParam("priority") String priority,
 			@RequestParam("startdate") String startDate, @RequestParam("enddate") String endDate)
 			throws ParseException {
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
 		User user = userDao.findById(id).get();
 		Task task = user.getTasks().stream().filter(t -> t.getId() == tId).findFirst().orElse(null);
 		task.setName(tName);
 		task.setDescription(description);
 		task.setPriority(priority);
-		DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
 		Date sdate = format.parse(startDate);
 		task.setStartDate(sdate);
 		Date edate = format.parse(endDate);
